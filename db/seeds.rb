@@ -8,8 +8,14 @@ query_count = STDIN.gets.chomp.to_i
 puts "Enter the time between each query in minutes:"
 interval_time = STDIN.gets.chomp.to_i
 
-item_counter = 1
-response = open("http://api.walmartlabs.com/v1/search?apiKey=knjkan27u9d85dnatvtf2ftw&responseGroup=full&query=cereal&numItems=25&start=#{item_counter}").read
-JSON.parse(response)["items"].each do |item|
-  puts item["brandName"]
+query_count.times do
+  item_counter = 1
+  while item_counter <= 976 do
+    response = open("http://api.walmartlabs.com/v1/search?apiKey=knjkan27u9d85dnatvtf2ftw&responseGroup=full&query=#{query}&numItems=25&start=#{item_counter}").read
+    JSON.parse(response)["items"].each do |item|
+      puts item["brandName"]
+    end
+    item_counter += 25
+  end
+  sleep(interval_time * 60)
 end
