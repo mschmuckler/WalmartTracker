@@ -10,22 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029181355) do
+ActiveRecord::Schema.define(version: 20171029184003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.string   "brand",      null: false
-    t.string   "image",      null: false
-    t.string   "url",        null: false
-    t.string   "category",   null: false
+    t.string   "name",           null: false
+    t.string   "brand",          null: false
+    t.string   "image",          null: false
+    t.string   "url",            null: false
+    t.string   "category",       null: false
     t.float    "price"
     t.float    "msrp"
     t.string   "reviews"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "num_of_reviews"
+    t.string   "search_query"
     t.index ["brand"], name: "index_items_on_brand", using: :btree
   end
 

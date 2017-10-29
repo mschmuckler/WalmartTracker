@@ -13,7 +13,19 @@ query_count.times do
   while item_counter <= 976 do
     response = open("http://api.walmartlabs.com/v1/search?apiKey=knjkan27u9d85dnatvtf2ftw&responseGroup=full&query=#{query}&numItems=25&start=#{item_counter}").read
     JSON.parse(response)["items"].each do |item|
-      puts item["brandName"]
+      newItem = Item.create(
+        search_query: query,
+        name: item["name"],
+        brand: item["brandName"],
+        image: item["thumbnailImage"],
+        url: item["productUrl"],
+        category: item["categoryPath"],
+        price: item["salePrice"],
+        msrp: item["msrp"],
+        reviews: item["customerRatingImage"],
+        num_of_reviews: item["numReviews"],
+      )
+      puts "Created #{newItem.id}: #{newItem.name}"
     end
     item_counter += 25
   end
