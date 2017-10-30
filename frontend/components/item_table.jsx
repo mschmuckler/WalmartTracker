@@ -2,12 +2,13 @@ import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { fetchItems } from '../api_util/items_api';
 
+let order = 'desc';
 class ItemTable extends React.Component {
   constructor() {
     super();
     this.state = {
       tableData: null,
-    }
+    };
 
     this.generateTableData = this.generateTableData.bind(this);
   }
@@ -80,7 +81,7 @@ class ItemTable extends React.Component {
           <BootstrapTable data={ this.generateTableData() } height='120' scrollTop={ 'Bottom' }>
             <TableHeaderColumn dataField='id' isKey={ true } hidden>ID</TableHeaderColumn>
             <TableHeaderColumn dataField='image' dataFormat={ this.imageFormatter }>Product</TableHeaderColumn>
-            <TableHeaderColumn dataField='name'></TableHeaderColumn>
+            <TableHeaderColumn dataField='name' filter={{ type: 'TextFilter', delay: 1000, placeholder: 'Search Products' }} dataSort></TableHeaderColumn>
             <TableHeaderColumn dataField='url' dataFormat={ this.linkFormatter }></TableHeaderColumn>
             <TableHeaderColumn dataField='brand'>Brand Name</TableHeaderColumn>
             <TableHeaderColumn dataField='category'>Category</TableHeaderColumn>
