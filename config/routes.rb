@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :items, only: [:index, :update]
     get "/itemsearchqueries", to: "items#searchqueries"
+    get "/itembrands", to: "items#brands"
     get "/itempercentages", to: "items#percentages"
   end
 end

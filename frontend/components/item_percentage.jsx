@@ -1,21 +1,26 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import AutoComplete from 'material-ui/AutoComplete';
-import { fetchSearchQueries } from '../api_util/items_api';
+import { fetchSearchQueries, fetchBrands } from '../api_util/items_api';
 
 class ItemPercentage extends React.Component {
   constructor() {
     super();
     this.state = {
       allSearchQueries: [],
+      allBrands: [],
       startDate: null,
       endDate: null,
       searchQuery: "",
+      brandInput: "",
+      selectedBrands: [],
     };
 
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleSearchQueryInput = this.handleSearchQueryInput.bind(this);
+    this.handleBrandInput = this.handleBrandInput.bind(this);
+    this.handleBrandClick = this.handleBrandClick.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +28,14 @@ class ItemPercentage extends React.Component {
       (payload) => {
         this.setState({
           allSearchQueries: payload,
+        });
+      }
+    );
+
+    fetchBrands().then(
+      (payload) => {
+        this.setState({
+          allBrands: payload,
         });
       }
     );
@@ -46,6 +59,22 @@ class ItemPercentage extends React.Component {
     });
   };
 
+  handleBrandInput(brandInput) {
+    this.setState({
+      brandInput: brandInput,
+    });
+  };
+
+  handleBrandClick(brandClick) {
+    console.log(brandClick);
+    let newSelectedBrands = this.state.selectedBrands;
+    newSelectedBrands.push(brandClick);
+    this.setState({
+      selectedBrands: newSelectedBrands,
+      brandInput: "",
+    });
+  }
+
   render() {
     return (
       <div id="item-percentage" >
@@ -60,11 +89,20 @@ class ItemPercentage extends React.Component {
           onChange={ this.handleEndDateChange }
         />
         <AutoComplete
-          hintText="Enter search query"
+          hintText="Enter Search Query"
           searchText={ this.state.searchQuery }
           onUpdateInput={ this.handleSearchQueryInput }
           dataSource={ this.state.allSearchQueries }
           filter={ (searchQuery, key) => (key.indexOf(searchQuery) !== -1) }
+          openOnFocus={ true }
+        />
+        <AutoComplete
+          hintText="Find a Brand"
+          searchText={ this.state.brandInput }
+          onUpdateInput={ this.handleBrandInput }
+          onNewRequest={ this.handleBrandClick }
+          dataSource={ this.state.allBrands }
+          filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
           openOnFocus={ true }
         />
 

@@ -4,3 +4,10 @@ export const fetchSearchQueries = () => {
     url: "/api/itemsearchqueries",
   });
 };
+
+export const fetchBrands = () => {
+  return $.ajax({
+    method: "GET",
+    url: "/api/itembrands",
+  });
+};
