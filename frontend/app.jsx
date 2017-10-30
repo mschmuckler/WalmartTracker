@@ -1,8 +1,11 @@
 import React from 'react';
+import ItemPercentage from './components/item_percentage';
 
 const App = (props) => {
   return (
-    <h1>Testing main app!</h1>
+    <div id="app" >
+      <ItemPercentage />
+    </div>
   );
 };
 
