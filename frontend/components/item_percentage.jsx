@@ -1,6 +1,7 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import AutoComplete from 'material-ui/AutoComplete';
+import Chip from 'material-ui/Chip';
 import { fetchSearchQueries, fetchBrands } from '../api_util/items_api';
 
 class ItemPercentage extends React.Component {
@@ -14,6 +15,7 @@ class ItemPercentage extends React.Component {
       searchQuery: "",
       brandInput: "",
       selectedBrands: [],
+      brandKeyCounter: 0,
     };
 
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
@@ -21,6 +23,7 @@ class ItemPercentage extends React.Component {
     this.handleSearchQueryInput = this.handleSearchQueryInput.bind(this);
     this.handleBrandInput = this.handleBrandInput.bind(this);
     this.handleBrandClick = this.handleBrandClick.bind(this);
+    this.handleRequestDelete = this.handleRequestDelete.bind(this);
   }
 
   componentDidMount() {
@@ -66,13 +69,34 @@ class ItemPercentage extends React.Component {
   };
 
   handleBrandClick(brandClick) {
-    console.log(brandClick);
     let newSelectedBrands = this.state.selectedBrands;
-    newSelectedBrands.push(brandClick);
+    newSelectedBrands.push({
+      key: this.state.brandKeyCounter,
+      label: brandClick,
+    });
     this.setState({
       selectedBrands: newSelectedBrands,
       brandInput: "",
+      brandKeyCounter: (this.state.brandKeyCounter + 1),
     });
+  }
+
+  handleRequestDelete(key) {
+    let newSelectedBrands = this.state.selectedBrands;
+    const chipToDelete = newSelectedBrands.map((chip) => chip.key).indexOf(key);
+    newSelectedBrands.splice(chipToDelete, 1);
+    this.setState({ selectedBrands: newSelectedBrands });
+  };
+
+  renderChip(data) {
+    return (
+      <Chip
+        key={ data.key }
+        onRequestDelete={ () => this.handleRequestDelete(data.key) }
+      >
+        { data.label }
+      </Chip>
+    );
   }
 
   render() {
@@ -105,6 +129,9 @@ class ItemPercentage extends React.Component {
           filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
           openOnFocus={ true }
         />
+      <div>
+        { this.state.selectedBrands.map(this.renderChip, this) }
+      </div>
 
         <button onClick={()=>{console.log(this.state)}} >GetState</button>
       </div>
