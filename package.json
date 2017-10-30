@@ -21,6 +21,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.19.4",
     "react": "^16.0.0",
+    "react-bootstrap-table": "^4.1.1",
     "react-dom": "^16.0.0",
     "webpack": "^3.8.1"
   }

@@ -19,3 +19,10 @@ export const fetchItemPercentages = (data) => {
     data,
   });
 };
+
+export const fetchItems = () => {
+  return $.ajax({
+    method: "GET",
+    url: "/api/items",
+  });
+};

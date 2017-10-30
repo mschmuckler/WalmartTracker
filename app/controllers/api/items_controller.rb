@@ -1,4 +1,8 @@
 class Api::ItemsController < ApplicationController
+  def index
+    @items = Item.select("distinct on (name) *")
+  end
+
   def percentages
     @brand_counts = Item
       .where(search_query: params["searchQuery"])
