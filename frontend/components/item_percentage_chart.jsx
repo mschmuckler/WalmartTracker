@@ -7,12 +7,16 @@ class ItemPercentageChart extends React.Component {
   }
 
   generateChartData() {
+    const totalCountOfSelected = Object.values(this.props.searchResults.brandCounts).reduce((sum, value) => {
+      return (sum + value);
+    }, 0);
     return Object.keys(this.props.searchResults.brandCounts).map((key, idx) => {
-      let count = this.props.searchResults.brandCounts[key];
-      let percent = ((count / this.props.searchResults.totalCount) * 100).toFixed(2);
+      const count = this.props.searchResults.brandCounts[key];
+      const percentOfTotal = ((count / this.props.searchResults.totalCount) * 100).toFixed(2);
+      const percentOfSelected = ((count / totalCountOfSelected) * 100).toFixed(2);
       return (
         <li key={ idx } >{
-          `${key}: ${percent}% (${count})`
+          `${key}: ${percentOfTotal}%, ${percentOfSelected}% (${count})`
         }</li>
       );
     });
