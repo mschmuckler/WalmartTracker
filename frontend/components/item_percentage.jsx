@@ -39,7 +39,7 @@ class ItemPercentage extends React.Component {
           onChange={this.handleEndDateChange}
         />
 
-      <button onClick={()=>{console.log(this.state)}} >GetState</button>
+        <button onClick={()=>{console.log(this.state)}} >GetState</button>
       </div>
     );
   }
