@@ -29,21 +29,48 @@ class ItemTable extends React.Component {
         image: item.image,
         name: item.name,
         url: item.url,
+        brand: item.brand,
+        category: item.category,
         price: item.price,
+        msrp: item.msrp,
+        reviews: item.reviews,
+        num_of_reviews: item.num_of_reviews,
       }
     });
   }
 
   imageFormatter(cell, row) {
-    return (<img style={{ width:50 }} src={ cell } />);
+    if (cell) {
+      return (
+        <img style={{ width:50 }} src={ cell } />
+      );
+    } else {
+      return "N/A"
+    }
   }
 
   linkFormatter(cell, row) {
     return (
-      <a href={ cell } >        
+      <a href={ cell } >
         <img style={{ width:20 }} src="http://www.iconsdb.com/icons/preview/icon-sets/web-2-blue/external-link-xxl.png" />
       </a>
     );
+  }
+
+  priceFormatter(cell, row) {
+    if (cell) {
+      return `$${cell.toFixed(2)}`
+    } else {
+      return "(none)"
+    }
+  }
+
+  reviewFormatter(cell, row) {
+    if (cell) {
+      return `(${cell})`;
+    } else {
+      return;
+    }
   }
 
   render() {
@@ -55,7 +82,12 @@ class ItemTable extends React.Component {
             <TableHeaderColumn dataField='image' dataFormat={ this.imageFormatter }>Product</TableHeaderColumn>
             <TableHeaderColumn dataField='name'></TableHeaderColumn>
             <TableHeaderColumn dataField='url' dataFormat={ this.linkFormatter }></TableHeaderColumn>
-            <TableHeaderColumn dataField='price'>Price</TableHeaderColumn>
+            <TableHeaderColumn dataField='brand'>Brand Name</TableHeaderColumn>
+            <TableHeaderColumn dataField='category'>Category</TableHeaderColumn>
+            <TableHeaderColumn dataField='price' dataFormat={ this.priceFormatter }>Price</TableHeaderColumn>
+            <TableHeaderColumn dataField='msrp' dataFormat={ this.priceFormatter }>MSRP</TableHeaderColumn>
+            <TableHeaderColumn dataField='reviews' dataFormat={ this.imageFormatter }>Reviews</TableHeaderColumn>
+            <TableHeaderColumn dataField='num_of_reviews' dataFormat={ this.reviewFormatter }></TableHeaderColumn>
           </BootstrapTable>
         </div>
       );
