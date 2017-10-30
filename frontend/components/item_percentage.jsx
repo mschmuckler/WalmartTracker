@@ -3,6 +3,7 @@ import DatePicker from 'material-ui/DatePicker';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
+import ItemPercentageChart from './item_percentage_chart';
 import {
   fetchSearchQueries,
   fetchBrands,
@@ -21,6 +22,8 @@ class ItemPercentage extends React.Component {
       brandInput: "",
       selectedBrands: [],
       brandKeyCounter: 0,
+      searchResults: null,
+      errors: "",
     };
 
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
@@ -107,17 +110,40 @@ class ItemPercentage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let selectedBrands = this.state.selectedBrands.map(el => {
-      return el.label;
-    });
+    let searchQuery;
+    let startDate;
+    let endDate;
+    let selectedBrands;
+    if (this.state.startDate && this.state.endDate && this.state.selectedBrands && this.state.searchQuery) {
+      searchQuery = this.state.searchQuery
+      startDate = this.state.startDate.toISOString();
+      endDate = this.state.endDate.toISOString();
+      selectedBrands = this.state.selectedBrands.map(el => {
+        return el.label;
+      });
+    } else {
+      this.setState({ errors: "All fields must be filled in" });
+      return;
+    }
     const data = {
-      searchQuery: this.state.searchQuery,
+      searchQuery,
+      startDate,
+      endDate,
       selectedBrands,
-      startDate: this.state.startDate.toISOString(),
-      endDate: this.state.endDate.toISOString(),
     };
     fetchItemPercentages(data).then(
-      (payload) => { console.log(payload) }
+      (payload) => {
+        this.setState({
+          searchResults: payload,
+          errors: "",
+        });
+      }
+    );
+  }
+
+  renderErrors() {
+    return (
+      <div>{ this.state.errors }</div>
     );
   }
 
@@ -157,6 +183,10 @@ class ItemPercentage extends React.Component {
         <RaisedButton
           label="Submit"
           onClick={ this.handleSubmit }
+        />
+        { this.renderErrors() }
+        <ItemPercentageChart
+          searchResults={ this.state.searchResults } 
         />
       </div>
     );

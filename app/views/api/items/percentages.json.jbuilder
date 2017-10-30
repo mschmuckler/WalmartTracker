@@ -1,1 +1,2 @@
-json.data @brand_counts
+json.brandCounts @brand_counts
+json.totalCount @total_count

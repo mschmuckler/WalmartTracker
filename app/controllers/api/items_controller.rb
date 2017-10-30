@@ -4,6 +4,12 @@ class Api::ItemsController < ApplicationController
       .where(search_query: params["searchQuery"])
       .where(created_at: params["startDate"]..params["endDate"])
       .where(brand: params["selectedBrands"])
+      .group(:brand)
+      .count
+    @total_count = Item
+      .where(search_query: params["searchQuery"])
+      .where(created_at: params["startDate"]..params["endDate"])
+      .count
   end
 
   def searchqueries
