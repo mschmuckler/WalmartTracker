@@ -2,7 +2,12 @@ import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
-import { fetchSearchQueries, fetchBrands } from '../api_util/items_api';
+import RaisedButton from 'material-ui/RaisedButton';
+import {
+  fetchSearchQueries,
+  fetchBrands,
+  fetchItemPercentages
+} from '../api_util/items_api';
 
 class ItemPercentage extends React.Component {
   constructor() {
@@ -24,6 +29,7 @@ class ItemPercentage extends React.Component {
     this.handleBrandInput = this.handleBrandInput.bind(this);
     this.handleBrandClick = this.handleBrandClick.bind(this);
     this.handleRequestDelete = this.handleRequestDelete.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -99,6 +105,22 @@ class ItemPercentage extends React.Component {
     );
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    let selectedBrands = this.state.selectedBrands.map(el => {
+      return el.label;
+    });
+    const data = {
+      searchQuery: this.state.searchQuery,
+      selectedBrands,
+      startDate: this.state.startDate.toISOString(),
+      endDate: this.state.endDate.toISOString(),
+    };
+    fetchItemPercentages(data).then(
+      (payload) => { console.log(payload) }
+    );
+  }
+
   render() {
     return (
       <div id="item-percentage" >
@@ -129,11 +151,13 @@ class ItemPercentage extends React.Component {
           filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
           openOnFocus={ true }
         />
-      <div>
-        { this.state.selectedBrands.map(this.renderChip, this) }
-      </div>
-
-        <button onClick={()=>{console.log(this.state)}} >GetState</button>
+        <div>
+          { this.state.selectedBrands.map(this.renderChip, this) }
+        </div>
+        <RaisedButton
+          label="Submit"
+          onClick={ this.handleSubmit }
+        />
       </div>
     );
   }

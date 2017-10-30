@@ -11,3 +11,11 @@ export const fetchBrands = () => {
     url: "/api/itembrands",
   });
 };
+
+export const fetchItemPercentages = (data) => {
+  return $.ajax({
+    method: "GET",
+    url: "/api/itempercentages",
+    data,
+  });
+};
