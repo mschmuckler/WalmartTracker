@@ -102,7 +102,7 @@ class ItemTable extends React.Component {
     if (this.state.tableData) {
       return (
         <div>
-          <BootstrapTable data={ this.generateTableData() } cellEdit={ cellEditProp }>
+          <BootstrapTable data={ this.generateTableData() } bordered={ false } cellEdit={ cellEditProp }>
             <TableHeaderColumn dataField='id' isKey={ true } hidden>ID</TableHeaderColumn>
             <TableHeaderColumn dataField='image' dataFormat={ this.imageFormatter }>Product</TableHeaderColumn>
             <TableHeaderColumn dataField='name' filter={{ type: 'TextFilter', delay: 1000, placeholder: 'Search Products' }} dataSort></TableHeaderColumn>
