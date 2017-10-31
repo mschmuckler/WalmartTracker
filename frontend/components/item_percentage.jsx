@@ -101,6 +101,7 @@ class ItemPercentage extends React.Component {
     return (
       <Chip
         key={ data.key }
+        style={{ margin: "5px" }}
         onRequestDelete={ () => this.handleRequestDelete(data.key) }
       >
         { data.label }
@@ -150,36 +151,38 @@ class ItemPercentage extends React.Component {
   render() {
     return (
       <div id="item-percentage" >
-        <DatePicker
-          hintText="Start Date"
-          value={ this.state.startDate }
-          onChange={ this.handleStartDateChange }
-        />
-        <DatePicker
-          hintText="End Date"
-          value={ this.state.endDate }
-          onChange={ this.handleEndDateChange }
-        />
-        <AutoComplete
-          hintText="Enter Search Query"
-          searchText={ this.state.searchQuery }
-          onUpdateInput={ this.handleSearchQueryInput }
-          dataSource={ this.state.allSearchQueries }
-          filter={ (searchQuery, key) => (key.indexOf(searchQuery) !== -1) }
-          maxSearchResults={ 5 }
-          openOnFocus={ true }
-        />
-        <AutoComplete
-          hintText="Find a Brand"
-          searchText={ this.state.brandInput }
-          onUpdateInput={ this.handleBrandInput }
-          onNewRequest={ this.handleBrandClick }
-          dataSource={ this.state.allBrands }
-          filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
-          maxSearchResults={ 5 }
-          openOnFocus={ true }
-        />
-        <div>
+        <div id="item-percentage-inputs" >
+          <DatePicker
+            hintText="Start Date"
+            value={ this.state.startDate }
+            onChange={ this.handleStartDateChange }
+          />
+          <DatePicker
+            hintText="End Date"
+            value={ this.state.endDate }
+            onChange={ this.handleEndDateChange }
+          />
+          <AutoComplete
+            hintText="Enter Search Query"
+            searchText={ this.state.searchQuery }
+            onUpdateInput={ this.handleSearchQueryInput }
+            dataSource={ this.state.allSearchQueries }
+            filter={ (searchQuery, key) => (key.indexOf(searchQuery) !== -1) }
+            maxSearchResults={ 5 }
+            openOnFocus={ true }
+          />
+          <AutoComplete
+            hintText="Find a Brand"
+            searchText={ this.state.brandInput }
+            onUpdateInput={ this.handleBrandInput }
+            onNewRequest={ this.handleBrandClick }
+            dataSource={ this.state.allBrands }
+            filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
+            maxSearchResults={ 5 }
+            openOnFocus={ true }
+          />
+        </div>
+        <div id="item-percentage-chips" >
           { this.state.selectedBrands.map(this.renderChip, this) }
         </div>
         <RaisedButton

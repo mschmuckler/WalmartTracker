@@ -33,7 +33,7 @@ class ItemPercentageChart extends React.Component {
         </div>
       );
     } else {
-      return <span>No results</span>
+      return <div></div>
     }
   }
 }
