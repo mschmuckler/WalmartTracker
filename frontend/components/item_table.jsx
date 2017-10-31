@@ -1,8 +1,32 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { fetchItems } from '../api_util/items_api';
+import { fetchItems, updateBrand } from '../api_util/items_api';
 
-let order = 'desc';
+function onBeforeSaveCell(row, cellName, cellValue) {
+  if (cellName === "brand") {
+    return true;
+  } else {
+    alert("Only 'Brand' is editable")
+    return false;
+  }
+}
+
+function onAfterSaveCell(row, cellName, cellValue) {
+  const data = {
+    id: row.id,
+    name: row.name,
+    brand: cellValue,
+  };
+  updateBrand(data);
+}
+
+const cellEditProp = {
+  mode: 'click',
+  blurToSave: true,
+  beforeSaveCell: onBeforeSaveCell,
+  afterSaveCell: onAfterSaveCell,
+};
+
 class ItemTable extends React.Component {
   constructor() {
     super();
@@ -78,7 +102,7 @@ class ItemTable extends React.Component {
     if (this.state.tableData) {
       return (
         <div>
-          <BootstrapTable data={ this.generateTableData() } height='120' scrollTop={ 'Bottom' }>
+          <BootstrapTable data={ this.generateTableData() } cellEdit={ cellEditProp }>
             <TableHeaderColumn dataField='id' isKey={ true } hidden>ID</TableHeaderColumn>
             <TableHeaderColumn dataField='image' dataFormat={ this.imageFormatter }>Product</TableHeaderColumn>
             <TableHeaderColumn dataField='name' filter={{ type: 'TextFilter', delay: 1000, placeholder: 'Search Products' }} dataSort></TableHeaderColumn>

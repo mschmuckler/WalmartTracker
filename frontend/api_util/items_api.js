@@ -26,3 +26,11 @@ export const fetchItems = () => {
     url: "/api/items",
   });
 };
+
+export const updateBrand = (data) => {
+  return $.ajax({
+    method: "PATCH",
+    url: `/api/items/${data.id}`,
+    data,
+  });
+};

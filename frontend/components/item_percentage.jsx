@@ -166,6 +166,7 @@ class ItemPercentage extends React.Component {
           onUpdateInput={ this.handleSearchQueryInput }
           dataSource={ this.state.allSearchQueries }
           filter={ (searchQuery, key) => (key.indexOf(searchQuery) !== -1) }
+          maxSearchResults={ 5 }
           openOnFocus={ true }
         />
         <AutoComplete
@@ -175,6 +176,7 @@ class ItemPercentage extends React.Component {
           onNewRequest={ this.handleBrandClick }
           dataSource={ this.state.allBrands }
           filter={ (brandInput, key) => (key.indexOf(brandInput) !== -1) }
+          maxSearchResults={ 5 }
           openOnFocus={ true }
         />
         <div>
@@ -186,7 +188,7 @@ class ItemPercentage extends React.Component {
         />
         { this.renderErrors() }
         <ItemPercentageChart
-          searchResults={ this.state.searchResults } 
+          searchResults={ this.state.searchResults }
         />
       </div>
     );
